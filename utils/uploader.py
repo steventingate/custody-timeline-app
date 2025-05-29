@@ -13,6 +13,6 @@ def handle_upload(file):
         if success:
             return {"status": "success"}
         else:
-            return {"status": "error", "message": "Database insert failed or duplicate file."}
+            return {"status": "error", "message": "Duplicate file or database error: this document has already been uploaded."}
     except Exception as e:
         return {"status": "error", "message": str(e)}
