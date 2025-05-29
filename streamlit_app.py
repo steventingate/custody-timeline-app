@@ -9,7 +9,7 @@ if not st.session_state.authenticated:
     password = st.text_input("Enter password", type="password")
     if password == "tekhaus2025":
         st.session_state.authenticated = True
-        st.experimental_rerun()
+        st.rerun()
     else:
         st.error("Incorrect password")
         st.stop()
