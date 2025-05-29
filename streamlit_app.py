@@ -22,7 +22,8 @@ if not st.session_state.authenticated:
 st.title("👨‍👩‍👧 Custody Timeline App")
 st.subheader("📤 Upload Documents")
 
-uploaded_files = st.file_uploader("Upload one or more files", type=["pdf", "msg", "docx", "jpg", "jpeg"], accept_multiple_files=True)
+# Allow all file types (handle validation in code)
+uploaded_files = st.file_uploader("Upload one or more files", type=None, accept_multiple_files=True)
 if uploaded_files:
     for uploaded_file in uploaded_files:
         result = handle_upload(uploaded_file)
@@ -39,4 +40,3 @@ if documents:
         st.write(f"📄 {doc['file_name']} - {doc['file_type']} ({doc['uploaded_at']})")
 else:
     st.info("No documents found.")
-
