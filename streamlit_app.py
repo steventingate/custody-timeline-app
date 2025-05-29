@@ -3,7 +3,7 @@ import streamlit as st
 from db import get_documents
 from utils.uploader import handle_upload
 
-st.set_page_config(page_title="Custody Timeline", layout="wide")
+st.set_page_config(page_title="Custody Timeline", layout="wide", initial_sidebar_state="collapsed")
 
 # Password protection
 if "authenticated" not in st.session_state:
