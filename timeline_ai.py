@@ -3,7 +3,6 @@ import streamlit as st
 import openai
 import psycopg2
 from psycopg2.extras import RealDictCursor
-import datetime
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 DB_URL = st.secrets["DB_URL"]
@@ -25,15 +24,9 @@ def fetch_document_texts(limit=100):
         return []
 
 def extract_timeline_events(documents):
-    prompt = "You are a legal assistant. Extract important custody-related events from the following documents. For each event, list the date if available, a short title, and a 1–2 sentence summary. Format it as bullet points.
-
-"
+    prompt = "You are a legal assistant. Extract important custody-related events from the following documents. For each event, list the date if available, a short title, and a 1–2 sentence summary. Format it as bullet points.\n\n"
     for doc in documents:
-        prompt += f"Document: {doc['file_name']}
-Content:
-{doc['content'][:2000]}
-
-"
+        prompt += f"Document: {doc['file_name']}\nContent:\n{doc['content'][:2000]}\n\n"
 
     try:
         response = openai.ChatCompletion.create(
@@ -48,10 +41,6 @@ Content:
 
 st.set_page_config(page_title="Custody Timeline", layout="wide")
 st.title("📅 AI Timeline View")
-
-if "OPENAI_API_KEY" not in st.secrets or "DB_URL" not in st.secrets:
-    st.warning("Missing API key or DB connection. Please configure Streamlit secrets.")
-    st.stop()
 
 doc_limit = st.slider("How many recent documents to process?", 10, 200, 50)
 docs = fetch_document_texts(limit=doc_limit)
