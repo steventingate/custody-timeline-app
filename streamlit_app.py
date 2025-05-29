@@ -1,6 +1,6 @@
 
 import streamlit as st
-from db import get_documents, insert_document
+from db import get_documents
 from utils.uploader import handle_upload
 
 st.set_page_config(page_title="Custody Timeline", layout="wide")
@@ -20,15 +20,16 @@ if not st.session_state.authenticated:
 
 # App UI
 st.title("👨‍👩‍👧 Custody Timeline App")
-st.subheader("📤 Upload New Documents")
+st.subheader("📤 Upload Documents")
 
-uploaded_file = st.file_uploader("Upload a file", type=["pdf", "msg", "docx", "jpg", "jpeg"])
-if uploaded_file:
-    result = handle_upload(uploaded_file)
-    if result["status"] == "success":
-        st.success(f"Uploaded: {uploaded_file.name}")
-    else:
-        st.error(result["message"])
+uploaded_files = st.file_uploader("Upload one or more files", type=["pdf", "msg", "docx", "jpg", "jpeg"], accept_multiple_files=True)
+if uploaded_files:
+    for uploaded_file in uploaded_files:
+        result = handle_upload(uploaded_file)
+        if result["status"] == "success":
+            st.success(f"Uploaded: {uploaded_file.name}")
+        else:
+            st.error(f"{uploaded_file.name}: {result['message']}")
 
 st.markdown("---")
 st.subheader("📄 Document Records")
@@ -38,3 +39,4 @@ if documents:
         st.write(f"📄 {doc['file_name']} - {doc['file_type']} ({doc['uploaded_at']})")
 else:
     st.info("No documents found.")
+
