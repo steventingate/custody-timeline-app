@@ -1,11 +1,12 @@
 
 import streamlit as st
 import openai
+import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
-openai.api_key = st.secrets["OPENAI_API_KEY"]
-DB_URL = st.secrets["DB_URL"]
+openai.api_key = os.environ.get("OPENAI_API_KEY")
+DB_URL = os.environ.get("DB_URL")
 
 def connect():
     return psycopg2.connect(DB_URL, cursor_factory=RealDictCursor)
