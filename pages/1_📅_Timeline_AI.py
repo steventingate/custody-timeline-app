@@ -1,11 +1,11 @@
 
 import streamlit as st
-import openai
 import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
+from openai import OpenAI
 
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 DB_URL = os.environ.get("DB_URL")
 
 def connect():
@@ -30,7 +30,7 @@ def extract_timeline_events(documents):
         prompt += f"Document: {doc['file_name']}\nContent:\n{doc['content'][:2000]}\n\n"
 
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.3,
