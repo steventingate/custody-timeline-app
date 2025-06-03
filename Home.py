@@ -6,7 +6,6 @@ from utils.db import get_recent_documents
 st.set_page_config(page_title="Custody Timeline App", layout="wide")
 
 st.title("👨‍👩‍👧 Custody Timeline App")
-
 st.write("Welcome. Use the sidebar to navigate between pages.")
 
 st.subheader("📄 Recently Uploaded Documents")
