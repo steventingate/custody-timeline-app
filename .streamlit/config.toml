@@ -1,6 +1,2 @@
-
 [server]
 headless = true
-
-[client]
-showSidebarNavigation = true
